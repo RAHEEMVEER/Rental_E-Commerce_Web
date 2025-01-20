@@ -25,7 +25,7 @@ export default function Cars(props:any) {
         <div className='flex gap-1'><Image src={Manual} alt='petrol avg' className='w-5 h-5'/><span className='text-sm text-[#6B7280]'>Manual</span></div>
         <div className='flex gap-1'><Image src={Capacity} alt='petrol avg' className='w-5 h-5'/><span className='text-sm text-[#6B7280]'>{props.capacity}</span></div>
       </div>
-      <div className='flex justify-between items-center mt-4'><h1 className='text-lg font-semibold'>{props.price}<span className='text-[#6B7280] text-base'>/day</span></h1><Link href={`${props.route}`}><Button stylee="bg-[#3563E9] py-2 px-2 rounded-md" content="Rent Now" contentStyle="text-white text-sm"/></Link></div>
+      <div className='flex justify-between items-center mt-4'><h1 className='text-lg font-semibold'>{props.price}<span className='text-[#6B7280] text-base'>/day</span></h1><Link href={`/${props.route}`}><Button stylee="bg-[#3563E9] py-2 px-2 rounded-md" content="Rent Now" contentStyle="text-white text-sm"/></Link></div>
     </div>
   )
 }

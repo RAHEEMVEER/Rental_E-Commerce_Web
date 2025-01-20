@@ -33,19 +33,19 @@ export default function Home() {
 
   const [popCars, setPopCars] = useState<CarsData[]>([]);
   const [recomCars, setRecomCars] = useState<CarsData[]>([]);
-  let image:any;
 
   const getSanityData = async () => {
     const res = await client.fetch(`*[_type == 'car']`);
     const popularCarNames = ["Nissan GT-R", "Rolls-Royce", "Koenigsegg", "Porsche 911"];
     const popularCars = res.filter((val: any) => popularCarNames.includes(val.name));
+    console.log(res.map((val: any) => val.name));
     setPopCars(popularCars);
     const recommendedCars = res.filter((val: any) => !popularCarNames.includes(val.name));
     setRecomCars(recommendedCars);
   };
-  
-  useEffect(() => { 
-    getSanityData() 
+
+  useEffect(() => {
+    getSanityData()
   }, []);
 
   return (
@@ -56,14 +56,14 @@ export default function Home() {
         style="px-4 lg:px-12 pt-12 pb-3"
         grid="grid-cols-4"
         speacility="Popular Cars"
-        cars={popCars.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route="/Details" />))}
+        cars={popCars.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={car.name} />))}
       />
       <RecomCars
         heading={<h1 className="text-[20px] font-semibold">Recommendation Car</h1>}
         style="px-4 lg:px-12 pb-3 bg-[#F6F7F9]"
         gridCol="grid-cols-4"
         showMore={<div className='flex justify-center mt-6 mb-3'><Link href="/Category"><Button stylee="bg-[#3563E9] py-2 px-3 rounded-md" content="Show More Cars" contentStyle="text-white text-sm" /></Link></div>}
-        cars={recomCars.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route="/Details" />))}
+        cars={recomCars.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={car.name} />))}
       />
     </>
   );
