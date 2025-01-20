@@ -50,7 +50,7 @@ export default function page({ params }: any) {
 
   const getSanityData = async () => {
     const res = await client.fetch(`*[_type == 'car']`);
-    let carNames = res.filter((val: any) => val.name == params.name);
+    let carNames = res.filter((val: any) => val.name.replace(/\s+/g, "") == params.name);
     if (carNames) {
       setCar(carNames);
     } else {
