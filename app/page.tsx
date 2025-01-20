@@ -56,7 +56,7 @@ export default function Home() {
         style="px-4 lg:px-12 pt-12 pb-3"
         grid="grid-cols-4"
         speacility="Popular Cars"
-        cars={popCars.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={car.name} />))}
+        cars={popCars.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={car.name.replace(/\s+/g, '')} />))}
       />
       <RecomCars
         heading={<h1 className="text-[20px] font-semibold">Recommendation Car</h1>}
