@@ -67,7 +67,7 @@ export default function page({ params }: any) {
             <div className="h-max">
               <RentalCar2 visibility="flex" img={urlFor(car.image).url() || "/placeholder.jpg"} w={300} h={300} imgStyle="mt-6"/>
               <div className="mt-6 md:mt-3 gap-3 flex justify-evenly md:justify-between">
-                <div className="bg-[url(/images/bg2.png)] bg-center bg-cover rounded-md flex justify-center items-center"><Image src={urlFor(car.image).url() || "/placeholder.jpg"} alt="car interior" width={200} height={100} /></div>
+                <div className="bg-[url(/images/bg2.png)] bg-center bg-cover rounded-md flex justify-center items-center px-3"><Image src={urlFor(car.image).url() || "/placeholder.jpg"} alt="car interior" width={190} height={100} /></div>
                 <div className="flex justify-end"><Image src={interior1} alt="car interior" /></div>
                 <div><Image src={interior2} alt="car interior" /></div>
               </div>
@@ -114,7 +114,7 @@ export default function page({ params }: any) {
               style="mt-8"
               grid="grid-cols-3"
               speacility="Recent Car"
-              cars={resCar.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route="/PaymentMethod" />))}
+              cars={resCar.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route="PaymentMethod" />))}
             />
           </div>
         </div>

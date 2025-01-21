@@ -19,7 +19,7 @@ export default function Cars(props:any) {
     <div className='py-4 px-4 bg-white h-full rounded-xl'>
       <div className='flex justify-between'><h1 className='text-lg font-semibold'>{props.CarName}</h1><i onClick={heart} className={`${isLike ? "ri-heart-2-fill text-red-600 text-[22px] cursor-pointer transition-all duration-500 ease-in-out" : "ri-heart-line text-[22px] cursor-pointer transition-all duration-500 ease-in-out"}`}></i></div>
       <p className='text-[#6B7280]'>{props.carTurbo}</p>
-      <div className='w-[100%] mt-14 flex justify-center'><Image src={props.img} alt="car image" width={190} height={200} unoptimized={true} /></div>
+      <div className='w-[100%] mt-14 flex justify-center'><Image src={props.img} alt="car image" width={220} height={200} unoptimized={true} /></div>
       <div className='flex mt-12 justify-between'>
         <div className='flex gap-1'><Image src={gasStation} alt='petrol avg' className='w-5 h-5'/><span className='text-sm text-[#6B7280]'>{props.liter}</span></div>
         <div className='flex gap-1'><Image src={Manual} alt='petrol avg' className='w-5 h-5'/><span className='text-sm text-[#6B7280]'>Manual</span></div>
