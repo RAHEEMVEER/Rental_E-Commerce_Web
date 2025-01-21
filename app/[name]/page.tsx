@@ -65,7 +65,7 @@ export default function page({ params }: any) {
         <div key={index} className="flex flex-col bg-[#F6F7F9] px-3 lg:px-5">
           <div className="pt-5 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-4 min-h-[50vh]">
             <div className="h-max">
-              <RentalCar2 visibility="flex" img={urlFor(car.image).url() || "/placeholder.jpg"} w={300} h={300} imgStyle="mt-6"/>
+              <RentalCar2 visibility="flex" img={urlFor(car.image).url() || "/placeholder.jpg"} w={300} h={300} imgStyle="mt-6" />
               <div className="mt-6 md:mt-3 gap-3 flex justify-evenly md:justify-between">
                 <div className="bg-[url(/images/bg2.png)] bg-center bg-cover rounded-md flex justify-center items-center px-3"><Image src={urlFor(car.image).url() || "/placeholder.jpg"} alt="car interior" width={190} height={100} /></div>
                 <div className="flex justify-end"><Image src={interior1} alt="car interior" /></div>
