@@ -3,6 +3,7 @@ import Image from "next/image";
 import rentalCar1 from "../../public/images/rentalCar1.png";
 import Button from "./Button";
 import RentalCar2 from "./RentalCar2";
+import rentalCar2 from "../../public/images/rentalCar2.png";
 
 export default function Hero() {
   return (
@@ -15,7 +16,7 @@ export default function Hero() {
         </div>
         <div className="flex justify-center"><Image src={rentalCar1} alt="car Image" className="w-[390px] h-auto mt-10 sm:mt-3"/></div>
       </div>
-      <RentalCar2 visibility="hidden md:flex lg:w-[50%] md:w-[70%]"/>
+      <RentalCar2 visibility="hidden md:flex lg:w-[50%] md:w-[70%]" img={rentalCar2} imgStyle="w-[350px] h-auto mt-3"/>
     </section>
   );
 }

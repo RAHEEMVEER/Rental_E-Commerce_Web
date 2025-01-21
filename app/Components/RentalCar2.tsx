@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from './Button';
 import Image from 'next/image';
-import rentalCar2 from "../../public/images/rentalCar2.png";
 
 export default function RentalCar2(props:any) {
   return (
@@ -11,7 +10,7 @@ export default function RentalCar2(props:any) {
       <p className="text-base text-white mt-4 w-[85%] sm:w-[70%] md:w-[80%] lg:w-[100%]">Providing cheap car rental services and safe and comfortable facilities.</p>
       <Button stylee="bg-[#54A6FF] mt-5 py-2 px-2 rounded-md" content="Rental Car" contentStyle="text-white"/>
     </div>
-    <div className="flex justify-center"><Image src={rentalCar2} alt="car Image" className="w-[350px] h-auto mt-3"/></div>
+    <div className="flex justify-center"><Image src={props.img} alt="car Image" className={`${props.imgStyle}`} width={props.w} height={props.h}/></div>
   </div>
   )
 }

@@ -6,7 +6,6 @@ import RentalCar2 from "../Components/RentalCar2";
 import Image from "next/image";
 import interior1 from "../../public/images/interior-1.png";
 import interior2 from "../../public/images/interior-2.png";
-import gtr from "../../public/images/rentalCar2.png";
 import Button from "../Components/Button";
 import Review from "../Components/Review";
 import user1 from "../../public/images/userImg.png";
@@ -15,13 +14,6 @@ import ReviewStar from "../Components/ReviewStar";
 import arrow from "../../public/images/arrow-down.png";
 import PopCars from "../Components/PopCars";
 import Cars from "../Components/Cars";
-import Car1 from "../../public/images/rentalCar1.png";
-import Car2 from "../../public/images/rentalCar2.png";
-import Car3 from "../../public/images/car3.png";
-import RecomCars from "../Components/RecomCars";
-import car4 from "../../public/images/car4.png";
-import car5 from "../../public/images/car5.png";
-import car6 from "../../public/images/car6.png";
 import Link from "next/link";
 import { client } from "../../sanity/lib/client";
 import { urlFor } from "../imageUrl";
@@ -45,14 +37,17 @@ interface CarsData {
 
 export default function page({ params }: any) {
 
-  const [isCar, setIsCar] = useState(<></>)
+  const [isCar, setIsCar] = useState(<></>);
   const [car, setCar] = useState<CarsData[]>([]);
+  const [resCar, setResCar] = useState<CarsData[]>([]);
 
   const getSanityData = async () => {
     const res = await client.fetch(`*[_type == 'car']`);
     let carNames = res.filter((val: any) => val.name.replace(/\s+/g, "") == params.name);
+    let remSelectedCar = res.filter((val: any) => val.name.replace(/\s+/g, "") != params.name);
     if (carNames) {
       setCar(carNames);
+      setResCar(remSelectedCar.slice(0, 6));
     } else {
       setIsCar(<div className="flex justify-center items-center text-orange-400">Selected Car Is Not Available</div>)
     }
@@ -70,7 +65,7 @@ export default function page({ params }: any) {
         <div key={index} className="flex flex-col bg-[#F6F7F9] px-3 lg:px-5">
           <div className="pt-5 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-4 min-h-[50vh]">
             <div className="h-max">
-              <RentalCar2 visibility="flex" />
+              <RentalCar2 visibility="flex" img={urlFor(car.image).url() || "/placeholder.jpg"} w={300} h={300} imgStyle="mt-6"/>
               <div className="mt-6 md:mt-3 gap-3 flex justify-evenly md:justify-between">
                 <div className="bg-[url(/images/bg2.png)] bg-center bg-cover rounded-md flex justify-center items-center"><Image src={urlFor(car.image).url() || "/placeholder.jpg"} alt="car interior" width={200} height={100} /></div>
                 <div className="flex justify-end"><Image src={interior1} alt="car interior" /></div>
@@ -119,20 +114,8 @@ export default function page({ params }: any) {
               style="mt-8"
               grid="grid-cols-3"
               speacility="Recent Car"
-              cars={[
-                <Cars key={1} CarName="Koenigsegg" carTurbo="sport car" img={Car1} liter="90" capacity="2" price="$99.00" route="/PaymentMethod" />,
-                <Cars key={2} CarName="Nissan GT-R" carTurbo="sport car" img={Car2} liter="80" capacity="2" price="$120.00" route="/PaymentMethod" />,
-                <Cars key={3} CarName="Rolls - Royce" carTurbo="family car" img={Car3} liter="70" capacity="4" price="$180.10" route="/PaymentMethod" />,
-              ]}
+              cars={resCar.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route="/PaymentMethod" />))}
             />
-            <RecomCars
-              style="pb-7"
-              gridCol="grid-cols-3"
-              cars={[
-                <Cars key={1} CarName="All New Rush" carTurbo="family car" img={car4} liter="70" capacity="6" price="$78.00" route="/PaymentMethod" />,
-                <Cars key={2} CarName="CR-V" carTurbo="family car" img={car5} liter="80" capacity="8" price="$80.00" route="/PaymentMethod" />,
-                <Cars key={3} CarName="All New Terios" carTurbo="family car" img={car6} liter="90" capacity="2" price="$90.00" route="/PaymentMethod" />,
-              ]} />
           </div>
         </div>
       ))}
