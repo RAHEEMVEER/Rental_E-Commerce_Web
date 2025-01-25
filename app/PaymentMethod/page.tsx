@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import BillingInfoLabel from "../Components/BillingInfoLabel";
 import RentalForm from "../Components/RentalForm";
@@ -5,10 +7,42 @@ import CardOption from "../Components/CardOption";
 import Button from "../Components/Button";
 import shell from "../../public/images/shell.png";
 import Image from "next/image";
-import gtr from "../../public/images/rentalCar2.png";
 import ReviewStar from "../Components/ReviewStar";
+import { useState, useEffect } from "react";
+import { urlFor } from "../imageUrl";
+
+interface Cars {
+  fuelCapacity: string;
+  image: {
+    _type: string;
+    asset: {
+      _ref: string;
+      _type: string;
+    };
+  };
+  name: string;
+  pricePerDay: string;
+  seatingCapacity: string;
+  tags: string[];
+  transmission: string;
+  type: string;
+};
 
 export default function page() {
+
+  const [car, setCar] = useState<Cars | null>(null);
+  const getCarData = async () => {
+    try {
+      const req = await fetch("/api/data");
+      const data = await req.json();
+      console.log(data.data);
+      setCar(data.data)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => { getCarData() }, []);
+
   return (
     <section className="flex flex-col-reverse lg:flex-row gap-5 bg-[#F6F7F9] py-5 px-2 md:px-6 xl:px-10 min-h-[100vh]">
       <div className="flex flex-col gap-5 w-full lg:w-[60%]">
@@ -65,16 +99,16 @@ export default function page() {
         <h1 className="text-[#1A202C] text-xl font-semibold">Rental Summary</h1>
         <p className="text-[#90A3BF] text-base mt-3">Prices may change depending on the length of the rental and the price of your rental car.</p>
         <div className="flex flex-col-reverse sm:flex-row gap-5 mt-7">
-          <div className="bg-[url(/images/bg2.png)] bg-center w-[200px] bg-cover rounded-md flex justify-center items-center p-4"><Image src={gtr} alt="car interior" className="w-[150px]" /></div>
+          <div className="bg-[url(/images/bg2.png)] bg-center w-[200px] bg-cover rounded-md flex justify-center items-center p-4"><Image src={car?.image ? urlFor(car.image).url() : "/placeholder.jpg"} alt="car interior" width={170} height={10} /></div>
           <div className="flex flex-col">
-            <h1 className="text-[24px] font-semibold">Nissan GT-R</h1>
+            <h1 className="text-[22px] font-semibold">{car?.name}</h1>
             <div className="flex items-center gap-2"><ReviewStar /><p className="text-sm text-[#6B7280]">440+ Reviewers</p></div>
           </div>
         </div>
 
         <div className="mt-8 pt-5 pb-3 border-t-2 border-[#C3D4E966]">
           <div className="flex flex-col gap-2">
-            <div className="flex justify-between items-center"><p className="text-[#90A3BF] text-base">Subtotal</p><p className="text-base font-semibold">$80.00</p></div>
+            <div className="flex justify-between items-center"><p className="text-[#90A3BF] text-base">Subtotal</p><p className="text-base font-semibold">{car?.pricePerDay}</p></div>
             <div className="flex justify-between items-center"><p className="text-[#90A3BF] text-base">Tax</p><p className="text-base font-semibold">$0</p></div>
           </div>
         </div>
@@ -86,9 +120,10 @@ export default function page() {
 
         <div className="flex justify-between items-center mt-10">
           <div><h1 className="font-semibold text-xl">Total Rental Price</h1><p className="text-[#90A3BF] text-sm">Overall price and includes rental discount</p></div>
-          <div><h1 className="text-xl font-semibold">$80.00</h1></div>
+          <div><h1 className="text-xl font-semibold">{car?.pricePerDay}</h1></div>
         </div>
       </div>
     </section>
   );
-}
+};
+

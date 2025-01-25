@@ -53,9 +53,27 @@ export default function page({ params }: any) {
     }
   };
 
+  const postData = async () => {
+    try {
+      const response = await fetch("/api/data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(car),
+      });
+      let data = await response.json();
+      console.log(data)
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
   useEffect(() => {
     getSanityData()
   }, []);
+
+  useEffect(() => {
+    postData()
+  }, [car])
 
   return (
     <section className="flex min-h-[100vh]">
