@@ -18,7 +18,7 @@ import Link from "next/link";
 import { client } from "../../sanity/lib/client";
 import { urlFor } from "../imageUrl";
 
-interface CarsData {
+export interface CarsData {
   fuelCapacity: string;
   image: {
     _type: string;
@@ -58,22 +58,27 @@ export default function page({ params }: any) {
       const response = await fetch("/api/data", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(car),
+        body: JSON.stringify({
+          car: car,
+          resCar: resCar,
+        }),
       });
-      let data = await response.json();
-      console.log(data)
+      const data = await response.json();
+      console.log("Data posted:", data);
     } catch (err) {
-      console.log(err)
+      console.error("Error posting data:", err);
     }
   };
 
   useEffect(() => {
-    getSanityData()
+    getSanityData();
   }, []);
 
   useEffect(() => {
-    postData()
-  }, [car])
+    if (car.length > 0) {
+      postData();
+    }
+  }, [car]);
 
   return (
     <section className="flex min-h-[100vh]">
@@ -111,7 +116,7 @@ export default function page({ params }: any) {
                   <h1><span className="text-xl font-bold">{car.pricePerDay}</span><span className="text-[#90A3BF] text-base">/day</span></h1>
                   <p className="text-[#90A3BF] text-base line-through">$100.00</p>
                 </div>
-                <Link href="/PaymentMethod"><Button stylee="bg-[#3563E9] px-3 py-2 rounded-md" contentStyle="text-white" content="Rent Now" /></Link>
+                <Link href={`/PaymentMethod?carName=${car.name}`}><Button stylee="bg-[#3563E9] px-3 py-2 rounded-md" contentStyle="text-white" content="Rent Now" /></Link>
               </div>
             </div>
           </div>
@@ -132,7 +137,7 @@ export default function page({ params }: any) {
               style="mt-8"
               grid="grid-cols-3"
               speacility="Recent Car"
-              cars={resCar.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route="PaymentMethod" />))}
+              cars={resCar.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={`/PaymentMethod?carName=${car.name}`} />))}
             />
           </div>
         </div>

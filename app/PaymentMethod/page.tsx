@@ -10,38 +10,29 @@ import Image from "next/image";
 import ReviewStar from "../Components/ReviewStar";
 import { useState, useEffect } from "react";
 import { urlFor } from "../imageUrl";
-
-interface Cars {
-  fuelCapacity: string;
-  image: {
-    _type: string;
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-  };
-  name: string;
-  pricePerDay: string;
-  seatingCapacity: string;
-  tags: string[];
-  transmission: string;
-  type: string;
-};
+import { useSearchParams } from "next/navigation";
+import { CarsData } from "../[name]/page";
 
 export default function page() {
+  const searchParams = useSearchParams();
+  const carName = searchParams.get("carName");
+  const [car, setCar] = useState<CarsData | null>(null);
 
-  const [car, setCar] = useState<Cars | null>(null);
-  const getCarData = async () => {
+  const fetchCarData = async () => {
     try {
-      const req = await fetch("/api/data");
-      const data = await req.json();
-      console.log(data.data);
-      setCar(data.data)
+      const res = await fetch(`/api/data?name=${carName}`);
+      const data = await res.json();
+      setCar(data.car);
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching car data:", err);
     }
   };
-  useEffect(() => { getCarData() }, []);
+
+  useEffect(() => {
+    if (carName) {
+      fetchCarData();
+    }
+  }, [carName]);
 
   return (
     <section className="flex flex-col-reverse lg:flex-row gap-5 bg-[#F6F7F9] py-5 px-2 md:px-6 xl:px-10 min-h-[100vh]">
@@ -99,7 +90,7 @@ export default function page() {
         <h1 className="text-[#1A202C] text-xl font-semibold">Rental Summary</h1>
         <p className="text-[#90A3BF] text-base mt-3">Prices may change depending on the length of the rental and the price of your rental car.</p>
         <div className="flex flex-col-reverse sm:flex-row gap-5 mt-7">
-          <div className="bg-[url(/images/bg2.png)] bg-center w-[200px] bg-cover rounded-md flex justify-center items-center p-4"><Image src={car?.image ? urlFor(car.image).url() : "/placeholder.jpg"} alt="car interior" width={170} height={10} /></div>
+          <div className="bg-[url(/images/bg2.png)] bg-center w-[200px] bg-cover rounded-md flex justify-center items-center p-4"><Image src={car?.image ? urlFor(car?.image).url() : "/placeholder.jpg"} alt="car interior" width={170} height={10} /></div>
           <div className="flex flex-col">
             <h1 className="text-[22px] font-semibold">{car?.name}</h1>
             <div className="flex items-center gap-2"><ReviewStar /><p className="text-sm text-[#6B7280]">440+ Reviewers</p></div>
