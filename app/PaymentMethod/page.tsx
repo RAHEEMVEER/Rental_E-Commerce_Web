@@ -13,7 +13,7 @@ import { urlFor } from "../imageUrl";
 import { useSearchParams } from "next/navigation";
 import { CarsData } from "../[name]/page";
 
-export default function page() {
+export default function Page() {
   const searchParams = useSearchParams();
   const carName = searchParams.get("carName");
   const [car, setCar] = useState<CarsData | null>(null);

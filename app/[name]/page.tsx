@@ -35,7 +35,7 @@ export interface CarsData {
   type: string;
 }
 
-export default function page({ params }: any) {
+export default function Page({ params }: any) {
 
   const [isCar, setIsCar] = useState(<></>);
   const [car, setCar] = useState<CarsData[]>([]);
