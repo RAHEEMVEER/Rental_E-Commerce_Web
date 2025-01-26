@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import BillingInfoLabel from "../Components/BillingInfoLabel";
 import RentalForm from "../Components/RentalForm";
 import CardOption from "../Components/CardOption";
@@ -8,23 +8,26 @@ import Button from "../Components/Button";
 import shell from "../../public/images/shell.png";
 import Image from "next/image";
 import ReviewStar from "../Components/ReviewStar";
-import { useState, useEffect, Suspense } from "react";
 import { urlFor } from "../imageUrl";
 import { useSearchParams } from "next/navigation";
 import { CarsData } from "../[name]/page";
+
 
 export default function Page() {
   const searchParams = useSearchParams();
   const carName = searchParams.get("carName");
   const [car, setCar] = useState<CarsData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchCarData = async () => {
     try {
       const res = await fetch(`/api/data?name=${carName}`);
       const data = await res.json();
       setCar(data.car);
+      setLoading(false);
     } catch (err) {
       console.error("Error fetching car data:", err);
+      setLoading(false);
     }
   };
 
@@ -34,16 +37,22 @@ export default function Page() {
     }
   }, [carName]);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading car details...</div>}>
       <section className="flex flex-col-reverse lg:flex-row gap-5 bg-[#F6F7F9] py-5 px-2 md:px-6 xl:px-10 min-h-[100vh]">
         <div className="flex flex-col gap-5 w-full lg:w-[60%]">
           <div className="bg-white px-3 sm:px-5 py-6 rounded-md">
             <div className="flex justify-between items-center">
-              <div><h1 className="text-lg font-semibold">Billing Info</h1><p className="text-sm text-[#90A3BF]">Please Enter Your Billing info</p></div>
+              <div>
+                <h1 className="text-lg font-semibold">Billing Info</h1>
+                <p className="text-sm text-[#90A3BF]">Please Enter Your Billing info</p>
+              </div>
               <p className="text-sm text-[#90A3BF]">Step 1of4</p>
             </div>
-
             <form className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-8">
               <BillingInfoLabel content="Name" inputType="text" holder="Your Name" bgColor="bg-[#F6F7F9]" />
               <BillingInfoLabel content="Phone Number" inputType="number" holder="Phone number" bgColor="bg-[#F6F7F9]" />
@@ -119,4 +128,3 @@ export default function Page() {
     </Suspense>
   );
 };
-
