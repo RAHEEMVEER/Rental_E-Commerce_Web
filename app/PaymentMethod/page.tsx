@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import BillingInfoLabel from "../Components/BillingInfoLabel";
 import RentalForm from "../Components/RentalForm";
 import CardOption from "../Components/CardOption";
