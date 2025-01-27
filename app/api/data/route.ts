@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { CarsData } from "@/app/[name]/page";
 
 let selectedCar: CarsData | null = null;
-let recentCars: CarsData[] = [];        
+let recentCars: CarsData[] = [];
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
       selectedCar = car[0];
     }
     if (resCar.length > 0) {
-      recentCars = resCar; 
+      recentCars = resCar;
     }
     return NextResponse.json({
       message: "Data saved successfully",
@@ -23,23 +23,18 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const name = searchParams.get("name");
+export async function GET() {
 
-  if (name) {
-    if (selectedCar?.name === name) {
-      return NextResponse.json({
-        car: selectedCar,
-      });
-    }
-    const matchedCar = recentCars.find((car) => car.name === name);
-    if (matchedCar) {
-      return NextResponse.json({
-        car: matchedCar,
-      });
-    }
-    return NextResponse.json({ message: "No car found with the given name" });
-  }
-  return NextResponse.json({ message: "No car name provided in query" });
+
+  return NextResponse.json({
+    car: selectedCar,
+  });
+
+  // const matchedCar = recentCars.find((car) => car.name === name);
+  // if (matchedCar) {
+  //   return NextResponse.json({
+  //     car: matchedCar,
+  //   });
+  // }
+
 }
