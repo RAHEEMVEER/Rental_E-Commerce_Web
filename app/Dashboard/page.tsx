@@ -14,6 +14,21 @@ import { CarsData } from "../[name]/page";
 import { urlFor } from "../imageUrl";
 import { client } from "@/sanity/lib/client";
 
+export const mainMenuLinks = [
+  { icon: "ri-home-9-fill", alt: "Dashboard", LinkName: "Dashboard" },
+  { icon: "ri-roadster-fill", alt: "Car", LinkName: "Car Rent" },
+  { icon: "ri-signal-tower-line", alt: "Insight", LinkName: "Insight" },
+  { icon: "ri-wallet-3-fill", alt: "Reimburse", LinkName: "Reimburse" },
+  { icon: "ri-message-2-fill", alt: "Inbox", LinkName: "Inbox" },
+  { icon: "ri-calendar-todo-fill", alt: "Calender", LinkName: "Calender" },
+];
+
+export const prefrences = [
+  { icon: "ri-settings-line", alt: "Settings", LinkName: "Settings" },
+  { icon: "ri-question-fill", alt: "Help", LinkName: "Help & Center" },
+  { icon: "ri-moon-fill", alt: "mode", LinkName: "Dark Mode" },
+];
+
 export default function Page() {
   const [transactionCars, setTransactionCars] = useState<CarsData[]>([]);
   const [car, setCar] = useState<CarsData | null>(null);
@@ -31,24 +46,7 @@ export default function Page() {
     }
   };
 
-
-
   useEffect(() => { fetchCarFromSan() }, []);
-
-  const mainMenuLinks = [
-    { icon: "ri-home-9-fill", alt: "Dashboard", LinkName: "Dashboard" },
-    { icon: "ri-roadster-fill", alt: "Car", LinkName: "Car Rent" },
-    { icon: "ri-signal-tower-line", alt: "Insight", LinkName: "Insight" },
-    { icon: "ri-wallet-3-fill", alt: "Reimburse", LinkName: "Reimburse" },
-    { icon: "ri-message-2-fill", alt: "Inbox", LinkName: "Inbox" },
-    { icon: "ri-calendar-todo-fill", alt: "Calender", LinkName: "Calender" },
-  ];
-
-  const prefrences = [
-    { icon: "ri-settings-line", alt: "Settings", LinkName: "Settings" },
-    { icon: "ri-question-fill", alt: "Help", LinkName: "Help & Center" },
-    { icon: "ri-moon-fill", alt: "mode", LinkName: "Dark Mode" },
-  ];
 
   const timeManagement = [
     { type: "Pick-Up", date: "20/7/24", time: "07.00" },
@@ -135,7 +133,7 @@ export default function Page() {
           </div>
 
           <div className="bg-white rounded-md py-6 px-4">
-            <div className="flex justify-between items-center mb-8"><h1 className="text-base font-semibold">Recent Transaction</h1><Link href="/" className="text-xs text-[#2185DE] hover:underline">View All</Link></div>
+            <div className="flex justify-between items-center mb-8"><h1 className="text-base font-semibold">Recent Transaction</h1><Link href="/transactionCars" className="text-xs text-[#2185DE] hover:underline">View All</Link></div>
             {car ? transactionCars.slice(0, 5).map((data, index) => (
               <div key={index} className="flex items-center gap-2 py-2 mt-6">
                 <div className="w-[22%] sm:w-[17%] md:w-[23%]"><Image src={data?.image ? urlFor(data.image).url() : "/placeholder.jpg"} alt="transaction cars" width={100} height={30} /></div>
