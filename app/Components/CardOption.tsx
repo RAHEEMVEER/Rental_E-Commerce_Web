@@ -9,7 +9,7 @@ export default function CardOptions() {
 
   function handleOptionClick(option: string) {
     setActiveOption(option === activeOption ? null : option);
-  }
+  };
 
   const options = [
     { name: "Credit Card", img: "/images/Visa.png", option: "option1" },

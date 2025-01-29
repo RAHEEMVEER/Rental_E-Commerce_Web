@@ -19,6 +19,7 @@ import { client } from "../../sanity/lib/client";
 import { urlFor } from "../imageUrl";
 
 export interface CarsData {
+  id: string;
   fuelCapacity: string;
   image: {
     _type: string;
