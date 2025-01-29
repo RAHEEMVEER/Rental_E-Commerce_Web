@@ -81,7 +81,7 @@ export default function Page() {
           <h1 className="font-semibold text-xl">Details Rental</h1>
           <Image src={map} alt="map" className="mt-4 w-full" />
           <div className="flex flex-col-reverse sm:flex-row gap-3 items-center mt-3">
-            <div className="w-full sm:w-max flex justify-start items-center"><div className="bg-[url(/images/bg2.png)] bg-center w-[140px] bg-cover rounded-md flex justify-center items-center p-4 mt-3"><Image src={car?.image ? urlFor(car.image).url() : "/placeholder.jpg"} alt="car interior" width={130} height={10} /></div></div>
+            <div className="w-full sm:w-max flex justify-start items-center"><div className="bg-[url(/images/bg2.png)] bg-center w-[140px] bg-cover rounded-md flex justify-center items-center p-2 mt-3"><Image src={car?.image ? urlFor(car.image).url() : "/placeholder.jpg"} alt="car interior" width={150} height={10} /></div></div>
             <div className="flex justify-between w-full">
               <div className="flex flex-col"><h1 className="text-[21px] font-semibold">{car?.name}</h1><p className="text-[#3D5278] text-sm">{car?.type}</p></div>
               <p className="text-[#3D5278] text-xs">#9761</p>
