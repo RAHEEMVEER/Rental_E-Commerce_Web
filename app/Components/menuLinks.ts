@@ -12,3 +12,16 @@ export const prefrences = [
     { icon: "ri-question-fill", alt: "Help", LinkName: "Help & Center" },
     { icon: "ri-moon-fill", alt: "mode", LinkName: "Dark Mode" },
 ];
+
+export const timeManagement = [
+    { type: "Pick-Up", date: "20/7/24", time: "07.00" },
+    { type: "Drop-Off", date: "21/7/24", time: "01.00" },
+];
+
+export const popularCarsDetail = [
+    { color: "bg-[#0D3559]", carType: "Sport Car", num: "17,439" },
+    { color: "bg-[#175D9C]", carType: "SUV", num: "9,478" },
+    { color: "bg-[#2185DE]", carType: "Coupe", num: "18,197" },
+    { color: "bg-[#63A9E8]", carType: "Hatchback", num: "12,510" },
+    { color: "bg-[#A6CEF2]", carType: "MPV", num: "14,406" },
+];

@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { CarsData } from "../[name]/page";
 import { urlFor } from "../imageUrl";
 import { client } from "@/sanity/lib/client";
-import { mainMenuLinks, prefrences } from "../Components/menuLinks";
+import { mainMenuLinks, prefrences, timeManagement, popularCarsDetail } from "../Components/menuLinks";
 
 export default function Page() {
   const [transactionCars, setTransactionCars] = useState<CarsData[]>([]);
@@ -31,21 +31,7 @@ export default function Page() {
       console.error('Error fetching data:', error);
     }
   };
-
   useEffect(() => { fetchCarFromSan() }, []);
-
-  const timeManagement = [
-    { type: "Pick-Up", date: "20/7/24", time: "07.00" },
-    { type: "Drop-Off", date: "21/7/24", time: "01.00" },
-  ];
-
-  const popularCarsDetail = [
-    { color: "bg-[#0D3559]", carType: "Sport Car", num: "17,439" },
-    { color: "bg-[#175D9C]", carType: "SUV", num: "9,478" },
-    { color: "bg-[#2185DE]", carType: "Coupe", num: "18,197" },
-    { color: "bg-[#63A9E8]", carType: "Hatchback", num: "12,510" },
-    { color: "bg-[#A6CEF2]", carType: "MPV", num: "14,406" },
-  ];
 
   return (
     <section className="flex min-h-[100vh]">
