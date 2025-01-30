@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { mainMenuLinks, prefrences } from "../Components/mainMenuLinks";
+import { mainMenuLinks, prefrences } from "../Components/menuLinks";
 import MainMenuLinks from "../Components/MainMenuLinks";
 import { client } from "@/sanity/lib/client";
 import { useState, useEffect } from "react";
@@ -22,7 +22,7 @@ export default function Page() {
         }
     };
     useEffect(() => { fetchCarFromSan() }, []);
-    
+
     return (
         <section className="flex min-h-[100vh]">
             <div className="bg-white min-h-[100vh] relative min-w-[250px] pt-5 px-4 shadow-inner hidden lg:block">
@@ -30,10 +30,6 @@ export default function Page() {
                 <div className="flex flex-col gap-1 mt-3">{mainMenuLinks.map((val, idx) => (<MainMenuLinks key={idx} img={val.icon} imgType={val.alt} LinkName={val.LinkName} />))}</div>
                 <h1 className="text-[#78889f] text-base mt-10">Prefrences</h1>
                 <div className="flex flex-col gap-1 mt-3">{prefrences.map((val, idx) => (<MainMenuLinks key={idx} img={val.icon} imgType={val.alt} LinkName={val.LinkName} />))}</div>
-                <div className="w-[87%] py-2 px-2 absolute bottom-3 flex gap-2 items-center hover:bg-[#3563E9] group cursor-pointer rounded-md">
-                    <i className="ri-logout-circle-line text-[#90A3BF] group-hover:text-white text-lg"></i>
-                    <p className="text-sm text-[#6c7c93] group-hover:text-white">Log Out</p>
-                </div>
             </div>
 
             <div className="bg-[#F6F7F9] w-full px-2 sm:px-4 py-3 xl:py-6">
