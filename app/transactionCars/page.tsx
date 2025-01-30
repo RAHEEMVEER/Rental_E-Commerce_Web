@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { mainMenuLinks } from "../Dashboard/page";
-import { prefrences } from "../Dashboard/page";
+import { mainMenuLinks, prefrences } from "../Components/mainMenuLinks";
 import MainMenuLinks from "../Components/MainMenuLinks";
 import { client } from "@/sanity/lib/client";
 import { useState, useEffect } from "react";
