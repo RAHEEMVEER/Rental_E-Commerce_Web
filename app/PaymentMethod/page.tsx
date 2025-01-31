@@ -14,6 +14,7 @@ import { CarsData } from "../[name]/page";
 import mark from "../../public/images/mark.png";
 import { client } from "@/sanity/lib/client";
 import { useUser } from "@clerk/nextjs";
+import SuccessPaymentPopUp from "../Components/SuccessPaymentPopUp";
 
 export default function Page() {
   const { user } = useUser();
@@ -115,9 +116,7 @@ export default function Page() {
 
   return (
     <>
-      {showPopUp && (
-        <div className="fixed left-[47%] top-[50%] bg-black p-4 text-white">Thanks For Rent</div>
-      )}
+      {showPopUp && (<SuccessPaymentPopUp />)}
       <section className="flex flex-col-reverse lg:flex-row gap-5 bg-[#F6F7F9] py-5 px-2 md:px-6 xl:px-10 min-h-[100vh]">
         <form className="flex flex-col gap-5 w-full lg:w-[60%]" onSubmit={handleSubmit}>
           <div className="bg-white px-3 sm:px-5 py-6 rounded-md">

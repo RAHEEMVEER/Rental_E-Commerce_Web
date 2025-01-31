@@ -12,6 +12,7 @@ import { useUser } from "@clerk/nextjs";
 
 export default function Page() {
     const [transactionCars, setTransactionCars] = useState<CarsData[]>([]);
+    const [car, setCar] = useState<CarsData | null>(null);
     const { isSignedIn, user } = useUser();
     const userId = user?.id;
 
@@ -21,11 +22,12 @@ export default function Page() {
             const data = await client.fetch(query, { userId: user });
             console.log("Fetched Data:", data);
             setTransactionCars(() => data);
+            setCar(() => data[0]);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
-    
+
     useEffect(() => {
         if (isSignedIn && userId) {
             fetchCarFromSan(userId);
@@ -44,7 +46,7 @@ export default function Page() {
             <div className="bg-[#F6F7F9] w-full px-2 sm:px-4 py-3 xl:py-6">
                 <h1 className="text-center text-xl font-semibold mt-2 mb-5">Transaction History</h1>
                 <div className="bg-white w-full rounded-md px-2 sm:px-4 py-3 xl:py-6">
-                    {transactionCars.map((data, index) => (
+                    {car ? transactionCars.map((data, index) => (
                         <div key={index} className="flex items-center gap-2 py-2 mt-6">
                             <div className="w-[22%] sm:w-[17%] md:w-[13%]"><Image src={data?.image ? urlFor(data.image).url() : "/placeholder.jpg"} alt="transaction cars" width={100} height={30} /></div>
                             <div className="flex flex-col w-[78%] sm:w-[83%] md:w-[100%]">
@@ -52,7 +54,7 @@ export default function Page() {
                                 <div className="flex justify-between items-center"><p className="text-xs xl:text-sm text-[#90A3BF]">{data?.type}</p><h1 className="text-base xl:text-lg font-semibold">{data?.pricePerDay}</h1></div>
                             </div>
                         </div>
-                    ))}
+                    )) : <div className="flex justify-center items-center min-h-[70vh]"><h1 className="flex justify-center text-red-600 text-base">No Recent Transactions</h1></div>}
                 </div>
             </div>
         </section>
