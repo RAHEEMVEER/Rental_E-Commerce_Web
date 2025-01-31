@@ -20,11 +20,13 @@ import AuthPopUp from "../Components/AuthPopUp";
 export default function Page() {
   const [transactionCars, setTransactionCars] = useState<CarsData[]>([]);
   const [car, setCar] = useState<CarsData | null>(null);
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
+  const userId = user?.id;
 
-  const fetchCarFromSan = async () => {
+  const fetchCarFromSan = async (user: string) => {
     try {
-      const data = await client.fetch('*[_type == "transaction"] | order(_createdAt desc)');
+      const query = `*[_type == "transaction" && userId == $userId] | order(_createdAt desc)`;
+      const data = await client.fetch(query, { userId: user });
       console.log("Fetched Data:", data);
       setTransactionCars(() => data);
       if (data.length > 0) {
@@ -36,10 +38,10 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (isSignedIn) {
-      fetchCarFromSan();
-    }
-  }, [isSignedIn]);
+    if (isSignedIn && userId) {
+      fetchCarFromSan(userId);
+    };
+  }, [isSignedIn, userId]);
 
   if (!isSignedIn) {
     return <AuthPopUp />

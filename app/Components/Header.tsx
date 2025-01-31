@@ -9,7 +9,7 @@ export default function Header({ login }: { login: React.ReactNode }) {
       <div className="flex justify-between items-center w-full md:max-w-max">
         <Link href="/" className="text-[#3563E9] text-[28px] font-semibold">MORENT</Link>
         <div className="flex gap-2">
-          <div className="flex justify-center items-center w-9 h-9 border border-gray-500 hover:border-[#3563E9] rounded-full cursor-pointer hover:bg-[#3563E9] group transition-all duration-500 ease-in-out"><Link href="/Dashboard"><i className="ri-user-settings-fill text-gray-600 text-[20px] group-hover:text-white"></i></Link></div>
+          <div className="flex justify-center md:hidden items-center w-9 h-9 border border-gray-500 hover:border-[#3563E9] rounded-full cursor-pointer hover:bg-[#3563E9] group transition-all duration-500 ease-in-out"><Link href="/Dashboard"><i className="ri-user-settings-fill text-gray-600 text-[20px] group-hover:text-white"></i></Link></div>
           <div className="w-9 h-9 md:hidden rounded-full">{login}</div>
         </div>
       </div>

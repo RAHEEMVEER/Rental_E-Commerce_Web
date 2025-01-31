@@ -13,8 +13,11 @@ import { urlFor } from "../imageUrl";
 import { CarsData } from "../[name]/page";
 import mark from "../../public/images/mark.png";
 import { client } from "@/sanity/lib/client";
+import { useUser } from "@clerk/nextjs";
 
 export default function Page() {
+  const { user } = useUser();
+  const userId = user?.id;
   const [car, setCar] = useState<CarsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [showPopUp, setShowPopUp] = useState(false);
@@ -62,6 +65,7 @@ export default function Page() {
     try {
       const carData = {
         _type: 'transaction',
+        userId: userId,
         name: car?.name,
         type: car?.type,
         fuelCapacity: car?.fuelCapacity,

@@ -8,20 +8,29 @@ import { useState, useEffect } from "react";
 import { CarsData } from "../[name]/page";
 import Image from "next/image";
 import { urlFor } from "../imageUrl";
+import { useUser } from "@clerk/nextjs";
 
 export default function Page() {
     const [transactionCars, setTransactionCars] = useState<CarsData[]>([]);
+    const { isSignedIn, user } = useUser();
+    const userId = user?.id;
 
-    const fetchCarFromSan = async () => {
+    const fetchCarFromSan = async (user: string) => {
         try {
-            const data = await client.fetch('*[_type == "transaction"] | order(_createdAt desc)');
+            const query = `*[_type == "transaction" && userId == $userId] | order(_createdAt desc)`;
+            const data = await client.fetch(query, { userId: user });
             console.log("Fetched Data:", data);
             setTransactionCars(() => data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
-    useEffect(() => { fetchCarFromSan() }, []);
+    
+    useEffect(() => {
+        if (isSignedIn && userId) {
+            fetchCarFromSan(userId);
+        };
+    }, [isSignedIn, userId]);
 
     return (
         <section className="flex min-h-[100vh]">

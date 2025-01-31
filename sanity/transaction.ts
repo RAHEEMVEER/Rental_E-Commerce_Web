@@ -1,7 +1,7 @@
 export default {
     name: 'transactions',
     type: 'document',
-    title: 'transaction Cars',
+    title: 'Transaction Cars',
     fields: [
         {
             name: 'name',
@@ -51,6 +51,12 @@ export default {
             options: {
                 hotspot: true
             }
+        },
+        {
+            name: 'userId',
+            type: 'string',
+            title: 'User ID',
+            description: 'ID of the user who is authenticated in website',
         }
     ],
 };

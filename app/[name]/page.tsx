@@ -34,6 +34,7 @@ export interface CarsData {
   tags: string[];
   transmission: string;
   type: string;
+  userId: string;
 }
 
 export default function Page({ params }: any) {
