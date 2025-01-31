@@ -14,10 +14,13 @@ import { CarsData } from "../[name]/page";
 import { urlFor } from "../imageUrl";
 import { client } from "@/sanity/lib/client";
 import { mainMenuLinks, prefrences, timeManagement, popularCarsDetail } from "../Components/menuLinks";
+import { useUser } from "@clerk/nextjs";
+import AuthPopUp from "../Components/AuthPopUp";
 
 export default function Page() {
   const [transactionCars, setTransactionCars] = useState<CarsData[]>([]);
   const [car, setCar] = useState<CarsData | null>(null);
+  const { isSignedIn } = useUser();
 
   const fetchCarFromSan = async () => {
     try {
@@ -31,10 +34,19 @@ export default function Page() {
       console.error('Error fetching data:', error);
     }
   };
-  useEffect(() => { fetchCarFromSan() }, []);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      fetchCarFromSan();
+    }
+  }, [isSignedIn]);
+
+  if (!isSignedIn) {
+    return <AuthPopUp />
+  };
 
   return (
-    <section className="flex min-h-[100vh]">
+    <section className="flex min-h-[100vh] relative">
       <div className="bg-white min-h-[100vh] relative min-w-[250px] pt-5 px-4 shadow-inner hidden lg:block">
         <h1 className="text-[#78889f] text-base">Main Menu</h1>
         <div className="flex flex-col gap-1 mt-3">{mainMenuLinks?.map((val, idx) => (<MainMenuLinks key={idx} img={val.icon} imgType={val.alt} LinkName={val.LinkName} />))}</div>
