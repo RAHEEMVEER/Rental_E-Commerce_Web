@@ -42,6 +42,7 @@ export default function Page({ params }: any) {
   const [isCar, setIsCar] = useState(<></>);
   const [car, setCar] = useState<CarsData[]>([]);
   const [resCar, setResCar] = useState<CarsData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const getSanityData = async () => {
     const res = await client.fetch(`*[_type == 'car']`);
@@ -50,9 +51,8 @@ export default function Page({ params }: any) {
     if (carNames) {
       setCar(carNames);
       setResCar(remSelectedCar.slice(0, 6));
-    } else {
-      setIsCar(<div className="flex justify-center items-center text-orange-400">Selected Car Is Not Available</div>)
-    }
+      setLoading(false);
+    };
   };
 
   const postData = async () => {
@@ -85,65 +85,65 @@ export default function Page({ params }: any) {
   return (
     <section className="flex min-h-[100vh]">
       <CarTypeAndCapacity />
-      {isCar}
-      {car.map((car, index) => (
-        <div key={index} className="flex flex-col bg-[#F6F7F9] px-3 lg:px-5">
-          <div className="pt-5 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-4 min-h-[50vh]">
-            <div className="h-max">
-              <RentalCar2 visibility="flex" img={urlFor(car.image).url() || "/placeholder.jpg"} w={300} h={300} imgStyle="mt-6" />
-              <div className="mt-6 md:mt-3 gap-3 flex justify-evenly md:justify-between">
-                <div className="bg-[url(/images/bg2.png)] bg-center bg-cover rounded-md flex justify-center items-center px-3"><Image src={urlFor(car.image).url() || "/placeholder.jpg"} alt="car interior" width={190} height={100} /></div>
-                <div className="flex justify-end"><Image src={interior1} alt="car interior" /></div>
-                <div><Image src={interior2} alt="car interior" /></div>
-              </div>
-            </div>
-
-            <div className="bg-white px-4 py-5 rounded-xl h-max">
-              <div className="flex justify-between items-center"><h1 className="text-[22px] font-semibold">{car.name}</h1><i className="ri-heart-2-fill text-red-600 text-[22px]"></i></div>
-              <div className="flex gap-2 items-center">
-                <ReviewStar />
-                <p className="text-sm text-[#6B7280]">440+ Reviewers</p>
-              </div>
-              <p className="mt-8 text-[#525864]">NISMO has become the embodiment of Nissans outstanding performance, inspired by the most unforgiving proving ground, the “race track”.</p>
-
-              <div className="mt-6 grid gap-y-4 grid-cols-1 sm:grid-cols-2 gap-x-10 sm:gap-y-2">
-                <div className="flex items-center justify-between"><h1 className="text-[#90A3BF]">TypeCar</h1><p className="text-[#596780]">{car.type}</p></div>
-                <div className="flex items-center justify-between"><h1 className="text-[#90A3BF]">Capacity</h1><p className="text-[#596780]">{car.seatingCapacity}</p></div>
-                <div className="flex items-center justify-between"><h1 className="text-[#90A3BF]">Steering</h1><p className="text-[#596780]">{car.transmission}</p></div>
-                <div className="flex items-center justify-between"><h1 className="text-[#90A3BF]">Gasoline</h1><p className="text-[#596780]">{car.fuelCapacity}</p></div>
-              </div>
-
-              <div className="flex justify-between mt-8">
-                <div className="flex flex-col">
-                  <h1><span className="text-xl font-bold">{car.pricePerDay}</span><span className="text-[#90A3BF] text-base">/day</span></h1>
-                  <p className="text-[#90A3BF] text-base line-through">$100.00</p>
+      {loading ? <div className='flex bg-[#F6F7F9] relative justify-center items-center w-full min-h-[50vh]'><i className="ri-loader-4-fill text-[#3563E9] text-3xl animate-spin-fast"></i></div> :
+        <> {car.map((car, index) => (
+          <div key={index} className="flex flex-col bg-[#F6F7F9] px-3 lg:px-5">
+            <div className="pt-5 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-4 min-h-[50vh]">
+              <div className="h-max">
+                <RentalCar2 visibility="flex" img={urlFor(car.image).url() || "/placeholder.jpg"} w={300} h={300} imgStyle="mt-6" />
+                <div className="mt-6 md:mt-3 gap-3 flex justify-evenly md:justify-between">
+                  <div className="bg-[url(/images/bg2.png)] bg-center bg-cover rounded-md flex justify-center items-center px-3"><Image src={urlFor(car.image).url() || "/placeholder.jpg"} alt="car interior" width={190} height={100} /></div>
+                  <div className="flex justify-end"><Image src={interior1} alt="car interior" /></div>
+                  <div><Image src={interior2} alt="car interior" /></div>
                 </div>
-                <Link href={`/PaymentMethod?carName=${car.name}`}><Button stylee="bg-[#3563E9] px-3 py-2 rounded-md" contentStyle="text-white" content="Rent Now" /></Link>
+              </div>
+
+              <div className="bg-white px-4 py-5 rounded-xl h-max">
+                <div className="flex justify-between items-center"><h1 className="text-[22px] font-semibold">{car.name}</h1><i className="ri-heart-2-fill text-red-600 text-[22px]"></i></div>
+                <div className="flex gap-2 items-center">
+                  <ReviewStar />
+                  <p className="text-sm text-[#6B7280]">440+ Reviewers</p>
+                </div>
+                <p className="mt-8 text-[#525864]">NISMO has become the embodiment of Nissans outstanding performance, inspired by the most unforgiving proving ground, the “race track”.</p>
+
+                <div className="mt-6 grid gap-y-4 grid-cols-1 sm:grid-cols-2 gap-x-10 sm:gap-y-2">
+                  <div className="flex items-center justify-between"><h1 className="text-[#90A3BF]">TypeCar</h1><p className="text-[#596780]">{car.type}</p></div>
+                  <div className="flex items-center justify-between"><h1 className="text-[#90A3BF]">Capacity</h1><p className="text-[#596780]">{car.seatingCapacity}</p></div>
+                  <div className="flex items-center justify-between"><h1 className="text-[#90A3BF]">Steering</h1><p className="text-[#596780]">{car.transmission}</p></div>
+                  <div className="flex items-center justify-between"><h1 className="text-[#90A3BF]">Gasoline</h1><p className="text-[#596780]">{car.fuelCapacity}</p></div>
+                </div>
+
+                <div className="flex justify-between mt-8">
+                  <div className="flex flex-col">
+                    <h1><span className="text-xl font-bold">{car.pricePerDay}</span><span className="text-[#90A3BF] text-base">/day</span></h1>
+                    <p className="text-[#90A3BF] text-base line-through">$100.00</p>
+                  </div>
+                  <Link href={`/PaymentMethod?carName=${car.name}`}><Button stylee="bg-[#3563E9] px-3 py-2 rounded-md" contentStyle="text-white" content="Rent Now" /></Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="mt-6 md:mt-10 bg-white flex flex-col gap-4 px-2 py-3 sm:p-3 rounded-lg">
-            <div><h1 className="text-xl font-semibold">Reviews <span className="bg-[#3563E9] p-2 rounded-full text-white text-lg font-semibold">13+</span></h1></div>
+            <div className="mt-6 md:mt-10 bg-white flex flex-col gap-4 px-2 py-3 sm:p-3 rounded-lg">
+              <div><h1 className="text-xl font-semibold">Reviews <span className="bg-[#3563E9] p-2 rounded-full text-white text-lg font-semibold">13+</span></h1></div>
+              <div>
+                <Review userImg={user1} name="Alex Stanton" position="CEO at Bukalapak" review="We are very happy with the service from the MORENT App. Morent has low prices..." date="21 July 2022" />
+                <Review userImg={user2} name="Skylar Dias" position="CEO at Amazon" review="We are greatly helped by the services of the MORENT Application. Morent has low prices..." date="20 July 2022" />
+              </div>
+              <div className="flex justify-center mt-2">
+                <p className="text-[#90A3BF] text-base flex gap-2 items-center cursor-pointer">Show All<Image src={arrow} alt='arrow down' className='w-3 h-4' /></p>
+              </div>
+            </div>
+
             <div>
-              <Review userImg={user1} name="Alex Stanton" position="CEO at Bukalapak" review="We are very happy with the service from the MORENT App. Morent has low prices..." date="21 July 2022" />
-              <Review userImg={user2} name="Skylar Dias" position="CEO at Amazon" review="We are greatly helped by the services of the MORENT Application. Morent has low prices..." date="20 July 2022" />
-            </div>
-            <div className="flex justify-center mt-2">
-              <p className="text-[#90A3BF] text-base flex gap-2 items-center cursor-pointer">Show All<Image src={arrow} alt='arrow down' className='w-3 h-4' /></p>
+              <PopCars
+                style="mt-8"
+                grid="grid-cols-3"
+                speacility="Recent Car"
+                cars={resCar.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={`/PaymentMethod?carName=${car.name}`} />))}
+              />
             </div>
           </div>
-
-          <div>
-            <PopCars
-              style="mt-8"
-              grid="grid-cols-3"
-              speacility="Recent Car"
-              cars={resCar.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={`/PaymentMethod?carName=${car.name}`} />))}
-            />
-          </div>
-        </div>
-      ))}
+        ))}</>}
     </section>
   );
 }

@@ -17,6 +17,7 @@ import { useUser } from "@clerk/nextjs";
 import SuccessPaymentPopUp from "../Components/SuccessPaymentPopUp";
 
 export default function Page() {
+  
   const { user } = useUser();
   const userId = user?.id;
   const [car, setCar] = useState<CarsData | null>(null);
@@ -111,7 +112,7 @@ export default function Page() {
   }, []);
 
   if (loading) {
-    return <div className="h-[80vh] flex justify-center items-center text-2xl">Loading...</div>;
+    return <div className='flex relative justify-center items-center min-h-[60vh]'><i className="ri-loader-4-fill text-[#3563E9] text-3xl animate-spin-fast"></i></div>
   };
 
   return (
