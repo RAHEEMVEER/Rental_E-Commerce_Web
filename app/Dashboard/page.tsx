@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { CarsData } from "../[name]/page";
 import { urlFor } from "../imageUrl";
 import { client } from "@/sanity/lib/client";
-import { mainMenuLinks, prefrences, timeManagement, popularCarsDetail } from "../Components/menuLinks";
+import { mainMenuLinks, prefrences, timeManagement, popularCarsDetail } from "../Components/mapData";
 import { useUser } from "@clerk/nextjs";
 import AuthPopUp from "../Components/AuthPopUp";
 
@@ -123,7 +123,7 @@ export default function Page() {
                   <div key={index} className="flex items-center gap-2 py-2 mt-6">
                     <div className="w-[22%] sm:w-[17%] md:w-[23%]"><Image src={data?.image ? urlFor(data.image).url() : "/placeholder.jpg"} alt="transaction cars" width={100} height={30} /></div>
                     <div className="flex flex-col w-[78%] sm:w-[83%] md:w-[77%]">
-                      <div className="flex justify-between items-center"><h1 className="text-base xl:text-lg font-semibold">{data?.name}</h1><p className="text-xs xl:text-sm text-[#90A3BF]">progress</p></div>
+                      <div className="flex justify-between items-center"><h1 className="text-base xl:text-lg font-semibold">{data?.name}</h1><p className="text-xs xl:text-sm text-[#90A3BF]">{data?.date}</p></div>
                       <div className="flex justify-between items-center"><p className="text-xs xl:text-sm text-[#90A3BF]">{data?.type}</p><h1 className="text-base xl:text-lg font-semibold">{data?.pricePerDay}</h1></div>
                     </div>
                   </div>

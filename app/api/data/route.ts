@@ -21,10 +21,9 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     return NextResponse.json({ error: "Failed to save data", details: err });
   }
-}
+};
 
 export async function GET() {
-
 
   return NextResponse.json({
     car: selectedCar,

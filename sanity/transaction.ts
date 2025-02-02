@@ -57,6 +57,12 @@ export default {
             type: 'string',
             title: 'User ID',
             description: 'ID of the user who is authenticated in website',
+        },
+        {
+            name: 'date',
+            type: 'string',
+            title: 'Date',
+            description: 'Date Of Transactions Cars',
         }
     ],
 };

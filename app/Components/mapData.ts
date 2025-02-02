@@ -25,3 +25,9 @@ export const popularCarsDetail = [
     { color: "bg-[#63A9E8]", carType: "Hatchback", num: "12,510" },
     { color: "bg-[#A6CEF2]", carType: "MPV", num: "14,406" },
 ];
+
+export const options = [
+    { name: "Credit Card", img: "/images/Visa.png", option: "option1" },
+    { name: "PayPal", img: "/images/PayPal.png", option: "option2" },
+    { name: "Bitcoin", img: "/images/Bitcoin.png", option: "option3" },
+];

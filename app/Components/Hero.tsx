@@ -12,11 +12,11 @@ export default function Hero() {
         <div>
           <h1 className="text-3xl font-semibold text-white w-[90%] sm:w-[65%] xl:w-[60%] mt-2">The Best Platform for Car Rental</h1>
           <p className="text-base text-white mt-4 w-[100%] sm:w-[70%]">Ease of doing car rental safely and reliably. Of course at a low price.</p>
-          <Button stylee="bg-[#3563E9] mt-5 py-2 px-2 rounded-md" content="Rental Car" contentStyle="text-white"/>
+          <Button stylee="bg-[#3563E9] mt-5 py-2 px-2 rounded-md" content="Rental Car" contentStyle="text-white" />
         </div>
-        <div className="flex justify-center"><Image src={rentalCar1} alt="car Image" className="w-[390px] h-auto mt-10 sm:mt-3"/></div>
+        <div className="flex justify-center"><Image src={rentalCar1} alt="car Image" className="w-[390px] h-auto mt-10 sm:mt-3" /></div>
       </div>
-      <RentalCar2 visibility="hidden md:flex lg:w-[50%] md:w-[70%]" img={rentalCar2} imgStyle="w-[350px] h-auto mt-3"/>
+      <RentalCar2 visibility="hidden md:flex lg:w-[50%] md:w-[70%]" img={rentalCar2} imgStyle="w-[350px] h-auto mt-3" />
     </section>
   );
 }

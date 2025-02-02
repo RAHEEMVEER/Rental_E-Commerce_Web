@@ -2,9 +2,6 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
-import BillingInfoLabel from "../Components/BillingInfoLabel";
-import RentalForm from "../Components/RentalForm";
-import CardOption from "../Components/CardOption";
 import Button from "../Components/Button";
 import shell from "../../public/images/shell.png";
 import Image from "next/image";
@@ -15,51 +12,31 @@ import mark from "../../public/images/mark.png";
 import { client } from "@/sanity/lib/client";
 import { useUser } from "@clerk/nextjs";
 import SuccessPaymentPopUp from "../Components/SuccessPaymentPopUp";
+import { options } from "../Components/mapData";
 
 export default function Page() {
-  
+
   const { user } = useUser();
   const userId = user?.id;
   const [car, setCar] = useState<CarsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [showPopUp, setShowPopUp] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phoneNumber: "",
-    address: "",
-    city: "",
-    pickupCity: "",
-    pickupDate: "",
-    pickupTime: "",
-    returnCity: "",
-    returnDate: "",
-    returnTime: "",
-  });
+  const [activeOption, setActiveOption] = useState<string | null>(null);
+  const [formData, setFormData] = useState({ name: "", phoneNumber: "", address: "", city: "", pickupCity: "", pickupDate: "", pickupTime: "", returnCity: "", returnDate: "", returnTime: "", });
 
   const resetFormFields = () => {
-    setFormData({
-      name: "",
-      phoneNumber: "",
-      address: "",
-      city: "",
-      pickupCity: "",
-      pickupDate: "",
-      pickupTime: "",
-      returnCity: "",
-      returnDate: "",
-      returnTime: "",
-    });
+    setFormData({ name: "", phoneNumber: "", address: "", city: "", pickupCity: "", pickupDate: "", pickupTime: "", returnCity: "", returnDate: "", returnTime: "", });
   };
 
   const fetchCarData = async () => {
     try {
       const res = await fetch(`/api/data`);
       const data = await res.json();
-      setCar(data.car);
-      setLoading(false);
+      setCar(() => data.car);
+      setLoading(() => false);
     } catch (err) {
       console.error("Error fetching car data:", err);
-      setLoading(false);
+      setLoading(() => false);
     }
   };
 
@@ -74,6 +51,7 @@ export default function Page() {
         transmission: car?.transmission,
         seatingCapacity: car?.seatingCapacity,
         pricePerDay: car?.pricePerDay,
+        date: new Date().toISOString().split("T")[0],
         image: {
           _type: 'image',
           asset: {
@@ -86,6 +64,10 @@ export default function Page() {
     } catch (err) {
       console.error('Error posting data to Sanity:', err);
     }
+  };
+
+  function handleOptionClick(option: string) {
+    setActiveOption(option === activeOption ? null : option);
   };
 
   const popUp = () => {
@@ -129,30 +111,27 @@ export default function Page() {
               <p className="text-sm text-[#90A3BF]">Step 1of4</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-8">
+
               <label className="flex flex-col gap-1">
                 <span className="text-sm">Name</span>
-                <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Your Name" name="name"
-                  value={formData.name}
-                  onChange={handleInputChange} required />
+                <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Your Name" name="name" value={formData.name} onChange={handleInputChange} required />
               </label>
+
               <label className="flex flex-col gap-1">
                 <span className="text-sm">Phone Number</span>
-                <input type="number" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Phone number" name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleInputChange} required />
+                <input type="number" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Phone number" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} required />
               </label>
+
               <label className="flex flex-col gap-1">
                 <span className="text-sm">Address</span>
-                <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Address" name="address"
-                  value={formData.address}
-                  onChange={handleInputChange} required />
+                <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Address" name="address" value={formData.address} onChange={handleInputChange} required />
               </label>
+
               <label className="flex flex-col gap-1">
                 <span className="text-sm">Town / City</span>
-                <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Town / City" name="city"
-                  value={formData.city}
-                  onChange={handleInputChange} required />
+                <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Town / City" name="city" value={formData.city} onChange={handleInputChange} required />
               </label>
+
             </div>
           </div>
 
@@ -164,80 +143,45 @@ export default function Page() {
             <div className='mt-8'>
               <h1 className='flex gap-2 items-center font-semibold mb-3 sm:mb-0 text-sm'><Image src={mark} alt="button" className='w-3 h-3 font' />Pick-Up</h1>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-3">
+
                 <label className="flex flex-col gap-1">
                   <span className="text-sm">City</span>
-                  <input
-                    type="text"
-                    className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]"
-                    placeholder="Enter Pickup City"
-                    name="pickupCity"
-                    value={formData.pickupCity}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Enter Pickup City" name="pickupCity" value={formData.pickupCity} onChange={handleInputChange} required />
                 </label>
+
                 <label className="flex flex-col gap-1">
                   <span className="text-sm">Pick-Up Date</span>
-                  <input
-                    type="date"
-                    className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]"
-                    name="pickupDate"
-                    value={formData.pickupDate}
-                    onChange={handleInputChange}
-                    required
+                  <input type="date" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" name="pickupDate" value={formData.pickupDate} onChange={handleInputChange} required
                   />
                 </label>
+
                 <label className="flex flex-col gap-1">
                   <span className="text-sm">Pick-Up Time</span>
-                  <input
-                    type="time"
-                    className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]"
-                    name="pickupTime"
-                    value={formData.pickupTime}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <input type="time" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" name="pickupTime" value={formData.pickupTime} onChange={handleInputChange} required />
                 </label>
+
               </div>
             </div>
 
             <div className='mt-8'>
               <h1 className='flex gap-2 items-center font-semibold mb-3 sm:mb-0 text-sm'><Image src={mark} alt="button" className='w-3 h-3 font' />Drop-Off</h1>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-3">
+
                 <label className="flex flex-col gap-1">
                   <span className="text-sm">City</span>
-                  <input
-                    type="text"
-                    className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]"
-                    placeholder="Enter Pickup City"
-                    name="returnCity"
-                    value={formData.returnCity}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" placeholder="Enter Pickup City" name="returnCity" value={formData.returnCity} onChange={handleInputChange} required />
                 </label>
+
                 <label className="flex flex-col gap-1">
                   <span className="text-sm">Drop-Off Date</span>
-                  <input
-                    type="date"
-                    className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]"
-                    name="returnDate"
-                    value={formData.returnDate}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <input type="date" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" name="returnDate" value={formData.returnDate} onChange={handleInputChange} required />
                 </label>
+
                 <label className="flex flex-col gap-1">
                   <span className="text-sm">Drop-Off Time</span>
-                  <input
-                    type="time"
-                    className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]"
-                    name="returnTime"
-                    value={formData.returnTime}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <input type="time" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-[#F6F7F9]" name="returnTime" value={formData.returnTime} onChange={handleInputChange} required />
                 </label>
+
               </div>
             </div>
           </div>
@@ -247,7 +191,43 @@ export default function Page() {
               <div><h1 className="text-lg font-semibold">Payment Method</h1><p className="text-sm text-[#90A3BF]">Please Enter Your payment method</p></div>
               <p className="text-sm text-[#90A3BF]">Step 3of4</p>
             </div>
-            <CardOption />
+            <div>
+              {options.map((opt, idx) => (
+                <div key={idx} className="bg-[#F6F7F9] px-3 py-3 mt-3 rounded-md">
+                  <div className="flex justify-between items-center">
+                    <label className="flex gap-2 cursor-pointer" htmlFor={opt.option}>
+                      <input type="radio" id={opt.option} name="card" onClick={() => handleOptionClick(opt.option)} className="cursor-pointer" required />
+                      <p className="text-sm">{opt.name}</p>
+                    </label>
+                    <Image src={opt.img} width={70} height={40} alt={opt.name} />
+                  </div>
+                  {
+                    activeOption === opt.option &&
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5">
+                      <label className="flex flex-col gap-1">
+                        <span className="text-sm">Card Number</span>
+                        <input type="number" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-white" placeholder="Card Number" required />
+                      </label>
+
+                      <label className="flex flex-col gap-1">
+                        <span className="text-sm">Expiration Date</span>
+                        <input type="date" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-white" placeholder="DD/MM/YY" required />
+                      </label>
+
+                      <label className="flex flex-col gap-1">
+                        <span className="text-sm">Card Holder</span>
+                        <input type="text" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-white" placeholder="Card Holder" required />
+                      </label>
+
+                      <label className="flex flex-col gap-1">
+                        <span className="text-sm">CVC</span>
+                        <input type="number" className="w-full text-sm py-3 px-3 rounded-md outline-none bg-white" placeholder="CVC" required />
+                      </label>
+                    </div>
+                  }
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="bg-white px-3 sm:px-5 py-6 rounded-md">
@@ -256,8 +236,8 @@ export default function Page() {
               <p className="text-sm text-[#90A3BF]">Step 4of4</p>
             </div>
             <div className="flex flex-col gap-4 mb-6">
-              <div className="bg-[#F6F7F9] px-3 py-2 rounded-md flex gap-2 items-center"><input type="checkbox" className="w-4 h-4" /><span className="text-sm">I agree with sending an Marketing and newsletter emails. No spam, promissed!</span></div>
-              <div className="bg-[#F6F7F9] px-3 py-2 rounded-md flex gap-2 items-center"><input type="checkbox" className="w-4 h-4" /><span className="text-sm">I agree with our terms and conditions and privacy policy.</span></div>
+              <div className="bg-[#F6F7F9] px-3 py-2 rounded-md flex gap-2 items-center"><input type="checkbox" className="w-4 h-4" required /><span className="text-sm">I agree with sending an Marketing and newsletter emails. No spam, promissed!</span></div>
+              <div className="bg-[#F6F7F9] px-3 py-2 rounded-md flex gap-2 items-center"><input type="checkbox" className="w-4 h-4" required /><span className="text-sm">I agree with our terms and conditions and privacy policy.</span></div>
             </div>
             <Button stylee="bg-[#3563E9] px-3 py-2 rounded-md" contentStyle="text-white text-sm" content="Rent Now" type="submit" />
             <div className="mt-6">

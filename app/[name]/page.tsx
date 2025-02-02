@@ -35,11 +35,11 @@ export interface CarsData {
   transmission: string;
   type: string;
   userId: string;
+  date: string;
 }
 
 export default function Page({ params }: any) {
 
-  const [isCar, setIsCar] = useState(<></>);
   const [car, setCar] = useState<CarsData[]>([]);
   const [resCar, setResCar] = useState<CarsData[]>([]);
   const [loading, setLoading] = useState(true);
