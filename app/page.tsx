@@ -46,7 +46,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getSanityData()
+    getSanityData();
   }, []);
 
   return (

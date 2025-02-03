@@ -30,7 +30,7 @@ export default function Page() {
 
   const fetchCarData = async () => {
     try {
-      const res = await fetch(`/api/data`);
+      const res = await fetch(`/api/data`, { cache: "no-store" });
       const data = await res.json();
       setCar(() => data.car);
       setLoading(() => false);
@@ -43,7 +43,7 @@ export default function Page() {
   const postCarData = async (car: CarsData) => {
     try {
       const carData = {
-        _type: 'transaction',
+        _type: "transaction",
         userId: userId,
         name: car?.name,
         type: car?.type,
@@ -53,16 +53,14 @@ export default function Page() {
         pricePerDay: car?.pricePerDay,
         date: new Date().toISOString().split("T")[0],
         image: {
-          _type: 'image',
-          asset: {
-            _ref: car?.image?.asset?._ref,
-          },
+          _type: "image",
+          asset: { _ref: car?.image?.asset?._ref },
         },
       };
       const response = await client.create(carData);
-      console.log('Data posted to Sanity:', response);
+      console.log("Data posted to Sanity:", response);
     } catch (err) {
-      console.error('Error posting data to Sanity:', err);
+      console.error("Error posting data to Sanity:", err);
     }
   };
 
