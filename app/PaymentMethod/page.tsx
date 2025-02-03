@@ -91,6 +91,10 @@ export default function Page() {
     fetchCarData();
   }, []);
 
+  if (!car) {
+    return <div className='flex relative justify-center items-center min-h-[60vh]'><h1 className="text-red-600 text-sm text-center">"Please select a car to rent before proceeding to the payment page."</h1></div>
+  }
+
   if (loading) {
     return <div className='flex relative justify-center items-center min-h-[60vh]'><i className="ri-loader-4-fill text-[#3563E9] text-3xl animate-spin-fast"></i></div>
   };
