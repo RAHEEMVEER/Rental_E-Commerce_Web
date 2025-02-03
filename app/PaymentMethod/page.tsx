@@ -92,7 +92,7 @@ export default function Page() {
   }, []);
 
   if (!car) {
-    return <div className='flex relative justify-center items-center min-h-[60vh]'><h1 className="text-red-600 text-sm text-center">"Please select a car to rent before proceeding to the payment page."</h1></div>
+    return <div className='flex relative justify-center items-center min-h-[60vh]'><h1 className="text-red-600 text-base text-center">Please select a car to rent before proceeding to the payment page.</h1></div>
   }
 
   if (loading) {
