@@ -9,7 +9,6 @@ export default function SuccessPaymentPopUp() {
 
     useEffect(() => {
         if (box.current) {
-            console.log('Element Ref:', box.current);
             gsap.to(box.current, {
                 opacity: 1,
                 y: -100,

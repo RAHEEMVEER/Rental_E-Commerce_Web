@@ -22,7 +22,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
             <>
               <SignedOut>
                 <SignInButton>
-                  <button className="bg-[#3563E9] p-1 rounded-full w-9 h-9 text-lg text-white"><i className="ri-user-add-line"></i></button>
+                  <button className="py-[6px] px-3 rounded-md text-base text-[#3563E9] border-[#3563E9] border-[2px] relative after:content-[''] after:absolute hover:after:w-full after:bg-[#3563E9] z-10 after:left-0 after:top-0 hover:text-white after:z-[-1] hover:after:animate-line after:h-full">Login</button>
                 </SignInButton>
               </SignedOut>
               <SignedIn>

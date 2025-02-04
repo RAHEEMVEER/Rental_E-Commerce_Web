@@ -13,8 +13,19 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      keyframes: {
+        lineExpand: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
+        lineDeExpand: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+      },
       animation: {
         "spin-fast": "spin 0.5s linear infinite",
+        "Nav": "lineDeExpand 0.3s ease-in-out",
       },
     },
   },
