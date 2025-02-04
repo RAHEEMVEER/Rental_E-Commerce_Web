@@ -51,7 +51,7 @@ export default function Header({ login }: { login: React.ReactNode }) {
       </div>
       <div className="hidden md:flex gap-9 items-center">
         {navItems.map((item) => (
-          <Link key={item.href} href={item.href} className={`text-base py-1 relative transition-all ${route === item.href ? 'text-[#3563E9] after:w-full after:animate-line' : 'text-[#6B7280] after:w-0'} after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[3px] after:bg-[#3563E9]`}>{item.label}</Link>
+          <Link key={item.href} href={item.href} className={`text-base py-1 relative transition-all ${route === item.href ? 'text-[#3563E9] after:w-full after:animate-navLine' : 'text-[#6B7280] after:w-0'} after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[3px] after:bg-[#3563E9]`}>{item.label}</Link>
         ))}
       </div>
 
