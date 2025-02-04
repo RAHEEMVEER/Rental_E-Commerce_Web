@@ -26,7 +26,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
                 </SignInButton>
               </SignedOut>
               <SignedIn>
-                <UserButton appearance={{ elements: { avatarBox: "w-9 h-9", } }} />
+                <UserButton appearance={{ elements: { avatarBox: "w-10 h-10", } }} />
               </SignedIn>
             </>
           } />

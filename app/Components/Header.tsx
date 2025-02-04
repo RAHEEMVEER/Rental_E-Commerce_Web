@@ -56,7 +56,7 @@ export default function Header({ login }: { login: React.ReactNode }) {
       </div>
 
       <div className={`block md:hidden fixed top-[68px] sm:top-[79px] left-0 w-[100%] h-screen overflow-hidden bg-white shadow-inner transition-transform duration-300 ${nav ? "animate-Nav translate-x-0" : "animate-Nav translate-x-full"}`}>
-        <div className="flex justify-between items-center pt-4 pr-4"><div className="py-[6px] px-3 rounded-md text-sm text-[#3563E9] border-[#3563E9] relative after:content-[''] after:absolute hover:after:w-full after:bg-[#3563E9] z-10 after:left-0 after:top-0 hover:text-white after:z-[-1] hover:after:animate-line after:h-full">{login}</div><i className="ri-close-large-line text-base sm:text-xl" onClick={() => setNav(false)}></i></div>
+        <div className="flex justify-between items-center pt-4 pr-4"><div className="py-[6px] px-3 rounded-md text-sm text-[#3563E9] border-[#3563E9] relative">{login}</div><i className="ri-close-large-line text-base sm:text-xl" onClick={() => setNav(false)}></i></div>
         <div className="flex flex-col gap-4 px-3 pt-6">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className={`text-base py-1 relative transition-all w-max ${route === item.href ? 'text-[#3563E9] after:w-full after:animate-line' : 'text-[#6B7280] after:w-0'} after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[3px] after:bg-[#3563E9]`} onClick={delay}>{item.label}</Link>
