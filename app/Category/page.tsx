@@ -10,7 +10,7 @@ import { CarsData } from "../[name]/page"
 import { client } from "../../sanity/lib/client";
 import { urlFor } from "../imageUrl";
 
-export default function page() {
+export default function Page() {
   const [cars, setCars] = useState<CarsData[]>([]);
   const [loading, setLoading] = useState(true);
 
