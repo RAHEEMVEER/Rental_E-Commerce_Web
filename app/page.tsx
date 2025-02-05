@@ -64,11 +64,11 @@ export default function Home() {
           />
 
           <RecomCars
-            heading={<h1 className="text-[20px] font-semibold">Recommendation Car</h1>}
+            heading={<h1 className="text-[20px] font-semibold">Recommendation Cars</h1>}
             style="px-4 lg:px-12 pb-3 bg-[#F6F7F9]"
             gridCol="grid-cols-4"
-            showMore={<div className='flex justify-center mt-6 mb-3'><Link href="/Category"><Button stylee="bg-[#3563E9] py-2 px-3 rounded-md" content="Show More Cars" contentStyle="text-white text-sm" /></Link></div>}
-            cars={recomCars.map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={car.name.replace(/\s+/g, '')} />))}
+            showMore={<div className='flex justify-center mt-6 mb-3'><Link href="/Category"><Button stylee="bg-[#3563E9] py-3 px-3 rounded-md" content="Show More Cars" contentStyle="text-white text-sm" /></Link></div>}
+            cars={recomCars.slice(0, 4).map((car, index) => (<Cars key={index} CarName={car.name} carTurbo={car.type} img={urlFor(car.image).url() || "/placeholder.jpg"} liter={car.fuelCapacity} capacity={car.seatingCapacity} price={car.pricePerDay} route={car.name.replace(/\s+/g, '')} />))}
           />
         </>
       }
