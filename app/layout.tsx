@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./Components/Header";
@@ -6,11 +7,6 @@ import Footer from "./Components/Footer";
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Morent",
-  description: "Affordable car rentals with easy booking process.",
-};
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
